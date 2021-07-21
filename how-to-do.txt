@@ -1,0 +1,74 @@
+Notes on how to design a software using MVC
+
+Python Tutorial: GUI Calculator with Model View Controller #1
+    1. Create the model.py file, view.py file, controller.py file.
+    2. Create the if '__name__' == '__main__': method in the controller file.
+    3. In it, create an instance of the controller class.
+    4. in the controller class, create a view instance and a model instance.
+        And create a main method in the controller class to run the app.
+    5. the view instance have to access the controller instance. So put the controller
+        in the param of the view instance. (self.view = View(self))
+
+Python Tutorial: GUI Calculator with Model View Controller #2
+    1. Bind the controller in the init method of the view. (now we have access to the controller methods in the view)
+    2. create a main method in the view class
+    3. launch the main method of the view in the main method of the controller to build the interface
+    3bis. install tkinter --> 'sudo apt-get install python3-tk' in the terminal (on Ubuntu)
+    4. 'import tkinter as tk' in the view file and 'from tkinter import ttk' to make the interface more modern.
+    5. make the view class inherites from tk.Tk ---> class View(tk.Tk) and in the init method
+        write 'super().__init__()'
+    6. write self.mainloop() in the main method of the view class
+
+Python Tutorial: GUI Calculator with Model View Controller #3
+    1. We now have access to all methods and attributes of the tk.Tk class in the view class.
+        in the init method of the view, set "self.title('app_name')"
+    2. Create "private" method to build the interface and call them in the init method of the view class.
+        (ex: 'def _make_main_frame(self):' or 'def _make_entry(self):')
+
+Python Tutorial: GUI Calculator with Model View Controller #4
+    1. in the init method of the view class, create a variable 'self.value_var = tk.StringVar()' and pass it to the
+        Entry via the textvariable option
+
+Python Tutorial: GUI Calculator with Model View Controller #5
+
+Python Tutorial: GUI Calculator with Model View Controller #6:
+    1.The view component is done.
+    2. Go back to controller class, create a callback function for when the user press the button.
+        'def on_button_click(self, caption):'
+    3. Go back to the view and bind the button with the callback controller function using the command option of the button.
+        'command=(lambda button=caption: self.controller.on_button_click)'
+
+Python Tutorial: GUI Calculator with Model View Controller #7
+    1. Now we have the view and the callback function set in the controller, let's write the model.
+        it's where the logic is handled, where the calculations are done.
+    2. create the method 'def calculate(self):' in the model class.
+    3. call this function in the controller method 'on_button_click'
+    4. Create self.value in the __init__ method in the model class
+    5. in the on_button_click method of the controller class, use self.view.value_var.set(result)
+        to update the view
+    
+
+Python Tutorial: GUI Calculator with Model View Controller #8
+    1. Create the self.operator and the self.previous_value attributes in the __init__ method of the model class.
+
+Python Tutorial: GUI Calculator with Model View Controller #9
+    1. create a "private" method in the model class 'def _evaluate(self):'
+
+Python Tutorial: GUI Calculator with Model View Controller #10
+    The transition between the Tutorial #9 and the Tutorial #10 is broken. but it's almost fixed in Tutorial #11
+    1. write a method 'def _center_windows(self)' in the view class to center the windows on the screen.
+    2. use an option in the button method of ttk class, to make the button with a width of 20. (we erased it).
+
+Python Tutorial: GUI Calculator with Model View Controller #11
+    I modified the _evaluate method in the model class with the solution of John Matozzi (in the youtube comments) like that :
+        def _evaluate(self):
+                self.result = eval(self.previous_value + self.operator + self.value)
+                if int(self.result) == self.result:
+                    self.result = int(self.result)
+                return self.result
+
+Python Tutorial: GUI Calculator with Model View Controller #12
+    1. We modify the look and feel of the calc app using ttk.Style(), we use tk.Label instead of ttk.Entry.
+
+Python Tutorial: GUI Calculator with Model View Controller #13
+    1. We modify the look and feel of the buttons by configuring 'TButton' in our ttk.Style() object.
